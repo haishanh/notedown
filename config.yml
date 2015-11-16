@@ -1,0 +1,21 @@
+title: Haishan's
+author: haishanh
+
+menu:
+  Home: /
+  About: http://hanhaishan.com/about/
+
+source_dir: notes
+output_dir: output
+theme_dir: themes/default
+
+# site
+#
+# if you are using a sub domain for example, http://example.com/notes
+# then root should be set to '/notes/' instead of '/'
+root: /
+per_page: 13
+
+# code highlight style
+# avaliable styles:
+# highlight_style: paraiso-dark 

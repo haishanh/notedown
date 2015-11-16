@@ -1,5 +1,8 @@
+'use strict';
+
 const chalk = require('chalk');
 
+// Logger
 function colorPrt(level, prefix, str) {
   var color = levelToColor[level];
   var prtStr = '[' + (new Date()).toLocaleString() + '] ' +
@@ -11,8 +14,7 @@ function colorPrt(level, prefix, str) {
 function Logger(prefix) { this.prefix = prefix; }
 
 var levelToColor = {
-  critical: 'red',
-  error: 'magenta',
+  error: 'red',
   warn: 'yellow',
   info: 'green',
   debug: 'white'
@@ -21,6 +23,9 @@ var levelToColor = {
 Object.keys(levelToColor).forEach(function (level) {
   Logger.prototype[level] = function (str) {
     colorPrt(level, this.prefix, str);
+    if (level === 'error') {
+      process.exit(1);
+    }
   };
 });
 

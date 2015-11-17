@@ -8,13 +8,14 @@ var fs = require('fs');
 // Logger
 function colorPrt(level, prefix, str) {
   var color = levelToColor[level];
-  var prtStr = '[' + (new Date()).toLocaleString() + '] ' +
+  var time = (new Date()).toTimeString().split(' ')[0];
+  var prtStr = '[' + chalk.gray(time) + '] ' +
                chalk[color](level.toUpperCase()) + ': ' +
                prefix + ': ' + str;
   console.log(prtStr);
 }
 
-function Logger(prefix) { this.prefix = prefix; }
+function Logger(prefix) { this.prefix = path.basename(prefix); }
 
 var levelToColor = {
   error: 'red',

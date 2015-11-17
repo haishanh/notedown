@@ -9,9 +9,7 @@ var helpStr = `
 `
 
 var args = process.argv.slice(2);
-console.log(args);
 cmdStr = args.shift();
-console.log(cmdStr);
 if (cmdStr in command) {
   command[cmdStr]();
 } else {

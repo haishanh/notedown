@@ -1,6 +1,9 @@
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require('chalk'),
+      path = require('path');
+
+var fs = require('fs');
 
 // Logger
 function colorPrt(level, prefix, str) {
@@ -29,5 +32,45 @@ Object.keys(levelToColor).forEach(function (level) {
   };
 });
 
+// extend fs
+
+// same as 'mkdir -p dirname'
+function makeDirs(dirname) {
+  console.log('make dir %s', dirname);
+  var dirnames = dirname.split(path.sep);
+  var parentDir = '';
+  dirnames.forEach(function (n) {
+    parentDir += n + path.sep;
+    try {
+      fs.statSync(parentDir);
+    } catch(e) {
+      if (e.code == 'ENOENT') {
+        fs.mkdirSync(parentDir);
+      } else {
+        throw e;
+      }
+    }
+  });
+}
+
+
+fs.safeSave = function (likeyExist, unlikeyExist, data) {
+  try {
+    fs.statSync(likeyExist);
+  } catch (e) {
+    makeDirs(likeyExist);
+  }
+  var fullpath = path.join(likeyExist, unlikeyExist);
+  var dirname = path.dirname(fullpath);
+  makeDirs(dirname);
+  fs.writeFile(fullpath, data, 'utf-8', function (err) {
+    if(err) throw err; 
+    console.log('Save to %s', fullpath);
+  });
+}
+
+// path
+
 
 module.exports.Logger = Logger;
+module.exports.fs = fs;

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>{{ title }}</title>
+{% endblock %}
+
+{% block left %}
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  {{ note.toc }}
+</div>
+{% if note.source %}
+<div class="view-source"><a href="{{ note.source }}">View source</a></div>
+{% endif %}
+</section>
+{% endblock %}
+
+{% block content %}
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>{{ note.title }}</h2>
+    <div class="tag-bar">
+    {% for tag in note.tags %}
+    <a href="{{ tag.link }}">{{tag.name}} </a>
+    {% endfor %}
+    </div>
+  </header>
+  {{ note.article }}
+</article>
+</section>
+{% endblock %}

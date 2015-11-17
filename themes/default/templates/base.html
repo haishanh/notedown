@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="TODO">
+    <meta name="author" content="TODO">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('main.css') }}">
+    {% block title %}
+    <title>title</title>
+    {% endblock %}
+  </head>
+  <body>
+    <header id="masthead">
+    <div class="inner">
+    <h2>{{ header_title }}</h2>
+    <img src="{{ url_for('notes.svg') }}" class="logo" alt="mdnotes logo">
+    <nav>
+      <ul>
+      {% for key in menu.keys() %}
+      <li><a href="{{ menu[key] }}">{{ key }}</a></li>
+      {% endfor %}
+      </ul>
+    </nav>
+    </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        {% block left %}
+        <section id="left" class="side">
+        {{ toc }}
+        </section>
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </main>       
+    </div>
+    {% block beforefooter %}
+    {% endblock %}
+    <footer>Powered by <a href="https://github.com/haishanh/mdnotes">mdnotes</a><br/>&copy; Copyright 2015 {{ author }}</footer>
+    {% block afterfooter %}
+    <script type="text/javascript" src="{{ url_for('jquery-1.11.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('mdnotes.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>

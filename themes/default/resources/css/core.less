@@ -1,0 +1,263 @@
+@font-base: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+@font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+@color-base: #66675f;
+@main-width: 1200px;
+@font-size: 16px;
+
+body {
+  font-family: @font-base;
+  color: @color-base;
+  font-size: @font-size;
+  line-height: 25px;
+}
+
+nav {
+  ul {
+    padding: 0;
+  }
+  li {
+    display: inline;
+    margin-right: 10px;
+  }
+}
+
+.tag-bar {
+  a {
+      text-decoration: none;
+      font-weight: 100;
+      border: 1px solid #ccc;
+      margin: 0 2px;
+      padding: 3px;
+      border-radius: 5px;
+      color: #ccc;
+  }
+}
+
+article {
+  header {
+    color: #4c6dd1;
+    h2 {
+      margin: 0 auto 8px auto;
+    }
+  }
+  h1, h2, h3 {
+    font-weight: 300;
+  }
+  h1, h2, h3, h4, h5, h6, h7 {
+    position: relative;
+  }
+  //a {
+  //  color: @color-base;
+  //  text-decoration: none;
+  //}
+  .header-anchor {
+    display: none;
+    position: absolute;
+    left: -15px;
+    padding-right: 15px;
+    color: desaturate(@red, 30%);
+    font-weight: 600;
+    text-decoration: none;
+    &:hover {
+      color: @red;
+      text-decoration: none;
+    }
+  }
+  img {
+    min-width: 120%;
+    max-width: 120%;
+    margin: 15px auto 15px -10%
+  }
+  // from github markdown
+  kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 #bbb;
+  }
+  blockquote {
+    border-left: 5px solid #ddd;
+    padding: 1px 5px 1px 15px;
+  }
+  a {
+    color: @blue;
+    &:hover {
+      color: @red;
+    }
+  }
+}
+
+// only apply to index page
+.index {
+  .note-header {
+    margin-bottom: 15px;
+    h2 {
+      margin: 0 auto;
+      display: inline-block;
+      a {
+        color: #4c6dd1;
+        text-decoration: none;
+        &:hover {
+          color: @red;
+        }
+      }
+    }
+  }
+  h1, h2, h3 {
+    font-weight: 300;
+  }
+  .tag-bar {
+    float: right;
+    margin-top: 5px;
+  }
+}
+
+// TOC
+#toc {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  li {
+    margin: 8px 0;
+    a {
+      text-decoration: none;
+      color: #00acee;
+      &:hover {
+        color: #ff3333
+      }
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 20px;
+  }
+  .title {
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: (@font-size * 1.25);
+  }
+  &.fixed {
+    position: fixed;
+    top: 0;
+    width: (@main-width * 0.22 - 2px);
+    z-index: 100;
+  }
+}
+
+
+#masthead {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  .logo {
+    max-width: 300px;
+  }
+  .inner {
+    width: @main-width;
+    margin: 0 auto;
+    nav {
+      a {
+        text-decoration: none;
+        padding: 3px;
+        &:hover {
+          color: #fff;
+          background-color: #555;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+
+#mainwrapper {
+  width: 100%;
+}
+
+main {
+  width: @main-width;
+  margin: 0 auto;
+  .note-list {
+    width: 700px;
+    margin: 0 auto;
+    a {
+      color: #4c6dd1;
+      text-decoration: none;
+      &:hover {
+        color: @red;
+      }
+    }
+    h1, h2, h3 {
+     font-weight: 300;
+    }
+  }
+}
+
+#left {
+  float: left;
+  min-height: 1px;
+  width: 22%;
+  //position: fixed;
+  .select-title {
+    margin: 5px auto;
+  }
+  select {
+    width: 65%;
+    margin-bottom: 15px;
+  }
+  .view-source {
+    margin-left: 5px;
+    margin-top: 8px;
+    a {
+      text-decoration: none;
+      color: @blue;
+      &:hover {
+        color: @red;
+      }
+    }
+  }
+}
+
+#middle {
+  float: left;
+  width: 70%;
+  margin: 0 auto;
+  &.note {
+    padding-left: 8%;
+  }
+}
+
+
+a.headerlink {
+  text-decoration: none;
+  color: #444;
+  padding: 0 4px;
+}
+
+pre {
+  font-family: @font-mono;
+}
+
+code {
+  &:extend(pre);
+  border-radius: 5px;
+  background-color: #eee;
+  white-space: nowrap;
+  padding: 2px 4px;
+}
+
+.codehilite {
+  padding: 5px 15px;
+}
+
+footer {
+  margin: 0 auto;
+  clear: left;
+  text-align: center;
+}

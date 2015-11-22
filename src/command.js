@@ -4,13 +4,15 @@ const glob = require('glob'),
       helper = require('./helper'),
       log = new helper.Logger(__filename),
       Note = require('./note'),
-      Config = require('./config');
+      Config = require('./config'),
+      Index = require('./index_page');
 
 function build() {
   console.log('Building...');
   var config = (new Config()).load();
   var notes = [];
   var tags = {}
+  var categories = {}
   glob(config.source_dir + '/**/*.md', function (err, files) {
     if (err) {
       log.error(err.name + err.message);  
@@ -27,6 +29,9 @@ function build() {
       log.info('    Link:' + note.link);
     });
   });
+  var index = new Index(config);
+  log.info('Rendering index page');
+  index.render(notes, categories, tags);
 }
 
 function serve() {

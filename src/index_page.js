@@ -3,7 +3,8 @@
 const pathFn = require('path'),
   swig = require('swig'),
   helper = require('./helper'),
-  fs = helper.fs;
+  fs = helper.fs,
+  log = new helper.Logger(pathFn.basename(__filename));
 
 // watch out
 // this file contains code for rendering the website level index.html
@@ -16,7 +17,8 @@ function Index(config) {
 
 Index.prototype.render = function (notes, categories, tags) {
   var per_page = this._config.per_page,
-      page_total = (notes.length + per_page - 1) / per_page;
+      page_total = Math.floor((notes.length + per_page - 1) / per_page);
+  log.info('page_total: ' + page_total);
   // TODO url_for
   var context = {};
   context.categories = categories;
@@ -35,27 +37,27 @@ Index.prototype.render = function (notes, categories, tags) {
                                            'index.html'),
                                  context);
     if (page_id == 0) {
-      target_path = pathFn.join(this._config.output_dir,
-                                this._config.root,
+      target_path = pathFn.join(this._config.root,
                                 'index.html');
     } else {
-      target_path = pathFn.join(this._config.output_dir,
-                                this._config.root,
+      target_path = pathFn.join(this._config.root,
                                 page_dir,
                                 '' + page_id,
                                 'index.html');
     }
-    fs.safeSave(target_path, result);
+    log.info('target_path: ' + target_path);
+    fs.safeSave(this._config.output_dir, target_path, result);
   }
 }
 
 
 function paginate(current, total, root, page, prev_text, next_text) {
-  let start, end;
+  let start,
+      end,
+      html = '';
   if (total <=1 ) {
     return '';
   }
-  html = '';
   function href(id) {
     if (id === 1) {
       return root;

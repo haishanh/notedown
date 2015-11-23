@@ -69,6 +69,7 @@ function setNoteProperties() {
 
 
 function Note(file, config, globalTags) {
+  log.debug('note init...');
   this.path = file;
   this.filename = path.basename(file); 
   this.name = path.basename(file, path.extname(file));

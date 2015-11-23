@@ -45,8 +45,9 @@ function makeDirs(dirname) {
     try {
       fs.statSync(parentDir);
     } catch(e) {
-      if (e.code == 'ENOENT') {
+      if (e.code === 'ENOENT') {
         fs.mkdirSync(parentDir);
+      } else if (e.code === 'EEXIST') {
       } else {
         throw e;
       }
@@ -56,13 +57,14 @@ function makeDirs(dirname) {
 
 
 fs.safeSave = function (likeyExist, unlikeyExist, data) {
+  var fullpath = path.join(likeyExist, unlikeyExist);
+  var dirname = path.dirname(fullpath);
+  console.log('Saving to ' + fullpath);
   try {
     fs.statSync(likeyExist);
   } catch (e) {
     makeDirs(likeyExist);
   }
-  var fullpath = path.join(likeyExist, unlikeyExist);
-  var dirname = path.dirname(fullpath);
   makeDirs(dirname);
   fs.writeFile(fullpath, data, 'utf-8', function (err) {
     if(err) throw err; 

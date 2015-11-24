@@ -36,7 +36,7 @@ function convertMD(str) {
     tables: true,
     breaks: false,
     pedantic: false,
-    sanitize: true,
+    sanitize: false,
     smartLists: true,
     smartypants: false
   }); 
@@ -106,8 +106,10 @@ Note.prototype.render = function () {
   setNoteProperties.call(this);
   // convert
   this.article = convertMD(content.md);
+  console.log(typeof this.article);
   context.title = "This is a test";
   context.note = this;
+  swig.setDefaults({ autoescape: false });
   var result = swig.renderFile(path.join(this._config.theme_dir,
                                          'templates',
                                          'note.html'),

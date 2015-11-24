@@ -4,6 +4,7 @@ const glob = require('glob'),
       helper = require('./helper'),
       log = new helper.Logger(__filename),
       Note = require('./note'),
+      Theme = require('./theme'),
       Config = require('./config'),
       Index = require('./index_page');
 
@@ -13,6 +14,8 @@ function build() {
   var notes = [];
   var tags = {};
   var categories = {};
+  var theme = new Theme(config);
+  theme.load();
   var files = glob.sync(config.source_dir + '/**/*.md');
 
   

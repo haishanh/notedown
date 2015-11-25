@@ -15,12 +15,12 @@ function Index(config) {
   this._config = config;
 }
 
-Index.prototype.render = function (notes, categories, tags) {
+Index.prototype.render = function (index_context, notes, categories, tags) {
   var per_page = this._config.per_page,
       page_total = Math.floor((notes.length + per_page - 1) / per_page);
   log.info('page_total: ' + page_total);
   // TODO url_for
-  var context = {};
+  var context = index_context || {};
   context.categories = categories;
   context.tags = tags;
   var page_dir = 'page';

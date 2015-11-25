@@ -9,7 +9,6 @@ function Tag(name, config) {
 }
 
 Tag.prototype.render = function () {
-
 }
 
 module.exports = Tag;

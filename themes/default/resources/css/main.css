@@ -176,8 +176,7 @@ hr {
 /**
  * Contain overflow in all browsers.
  */
-pre,
-code {
+pre {
   overflow: auto;
 }
 /**
@@ -186,8 +185,7 @@ code {
 code,
 kbd,
 pre,
-samp,
-code {
+samp {
   font-family: monospace, monospace;
   font-size: 1em;
 }
@@ -370,6 +368,7 @@ nav li {
 }
 .tag-bar a {
   text-decoration: none;
+  font-weight: 100;
   border: 1px solid #ccc;
   margin: 0 2px;
   padding: 3px;
@@ -402,6 +401,7 @@ article .header-anchor {
   left: -15px;
   padding-right: 15px;
   color: #e67f75;
+  font-weight: 600;
   text-decoration: none;
 }
 article .header-anchor:hover {
@@ -569,14 +569,13 @@ a.headerlink {
   color: #444;
   padding: 0 4px;
 }
-pre,
-code {
+pre {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  border-radius: 5px;
+  padding: 2px 4px;
+  background: #eee;
 }
 code {
-  border-radius: 5px;
-  background-color: #eee;
-  white-space: nowrap;
   padding: 2px 4px;
 }
 .codehilite {

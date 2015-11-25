@@ -34,7 +34,7 @@ function convertMD(str) {
     renderer: new markdown.Renderer(),
     gfm: true,
     tables: true,
-    breaks: false,
+    breaks: true,
     pedantic: false,
     sanitize: false,
     smartLists: true,
@@ -78,11 +78,11 @@ function Note(file, config, globalTags) {
   this._globalTags = globalTags;
 }
 
-Note.prototype.render = function () {
+Note.prototype.render = function (note_context) {
   log.info(`Rendering ${this.path}`);
   var content = splitFM(this.path);
   var fm = yaml.safeLoad(content.fm);
-  var context = {};
+  var context = note_context || {};
   // roughly extend
   var self = this;
   for (var key in fm) {
@@ -99,15 +99,16 @@ Note.prototype.render = function () {
         theTag.notes.push(self);
         self.tags.push(theTag);
       });
+    } else {
+      self[key.toLowerCase()] = fm[key];
     }
-    self[key.toLowerCase()] = fm[key];
   }
   //
   setNoteProperties.call(this);
   // convert
   this.article = convertMD(content.md);
   console.log(typeof this.article);
-  context.title = "This is a test";
+  context.title = this.title;
   context.note = this;
   swig.setDefaults({ autoescape: false });
   var result = swig.renderFile(path.join(this._config.theme_dir,

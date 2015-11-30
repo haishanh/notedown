@@ -3,7 +3,7 @@
 const path = require('path'),
       swig = require('swig'),
       yaml = require('js-yaml'),
-      markdown = require('marked'),
+      markdown = require('hs-marked-extra'),
       Tag = require('./tag'),
       helper = require('./helper'),
       fs = helper.fs,
@@ -34,11 +34,12 @@ function convertMD(str) {
     renderer: new markdown.Renderer(),
     gfm: true,
     tables: true,
-    breaks: true,
+    breaks: false,
     pedantic: false,
     sanitize: false,
     smartLists: true,
-    smartypants: false
+    smartypants: false,
+    admonition: true
   }); 
   return markdown(str);
 }

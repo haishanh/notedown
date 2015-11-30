@@ -674,6 +674,7 @@ footer {
   text-align: left;
 }
 .admonition.note,
+.admonition.info,
 .admonition.tips {
   color: #98802b;
   background-color: #fff4cc;

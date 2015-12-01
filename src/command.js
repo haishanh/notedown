@@ -32,6 +32,20 @@ function build() {
     log.info('    Tag:' + note.tags);
     log.info('    Link:' + note.link);
   });
+
+  // individual note page
+  // url route: /<root>/tags/<tagName>/index.html
+  Object.keys(tags).forEach(function (tagName) {
+    tags[tagName].render(context.tag);
+  });
+
+  // individul category page
+  // url route: /<root>/categories/<cateName>/index.html
+  Object.keys(categories).forEach(function (cateName) {
+    categories[cateName].render(context.category);
+  });
+
+  // global index page
   var index = new Index(config);
   log.info('Rendering index page');
   index.render(context.index, notes, categories, tags);

@@ -154,8 +154,6 @@ function setNoteProperties() {
   theCate.count += 1;
   this.category = theCate;
 
-  log.debug('== category name ==');
-  log.debug(this.category.name);
   /* set link
    * uncategorized notes stay in root
    */

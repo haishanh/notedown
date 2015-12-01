@@ -33,6 +33,9 @@ function splitFM(file) {
 
 function convertMD(str) {
   markdown.setOptions({
+    highlight: function (code) {
+      return require('highlight.js').highlightAuto(code).value;
+    },
     renderer: new markdown.Renderer(),
     gfm: true,
     tables: true,

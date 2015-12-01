@@ -3,6 +3,7 @@
 const path = require('path'),
       swig = require('swig'),
       yaml = require('js-yaml'),
+      _ = require('lodash'),
       markdown = require('hs-marked-extra'),
       Tag = require('./tag'),
       helper = require('./helper'),
@@ -40,8 +41,89 @@ function convertMD(str) {
     smartLists: true,
     smartypants: false,
     admonition: true
-  }); 
+  });
   return markdown(str);
+}
+
+/**
+ * Retrive TOC from html
+ * @function
+ * @param {string} x - html string
+ * @param {number} n - number of levels of headings want to keep
+ *
+ * for example n = 3,
+ *   if there are [h1 h3 h4 h5] in x, all [h1 h3 h4] will be kept
+ *   if there are [h3 h4] in x, all [h3 h4] will be kept
+ */
+function getToc(x, n) {
+  var reHeading = /<h([1-6])\s+[^\n]*?id="([^\n]+?)"(?:\s+[^\n]*?)?>([^\n]+?)<\/h[1-6]>/,
+      headings = [],
+      i,
+      cap,
+      hl, // lodash wrappered headings
+      keep,
+      out = '<div class="toc">',
+      pre = 0,
+      closeTags = ['</div>'],
+      tmp;
+
+  // parse text
+  while (cap = reHeading.exec(x)) {
+    console.log(cap[2]);
+    x = x.substring(cap.index + cap[0].length);
+    headings.push({
+      level: cap[1] - 0,
+      id: cap[2],
+      title: cap[3]
+    });
+  }
+
+  hl = _(headings);
+  tmp = hl
+    .sortBy('level')
+    .pluck('level')
+    .uniq()
+    .take(n)
+    .reverse()
+    .value()
+
+  keep = tmp[0] || n;
+  pre = tmp[tmp.length -1] - 1;
+
+  hl
+    .filter(function (h) {
+      return h.level <= keep;
+    })
+    .forEach(function (h) {
+      var dif = h.level - pre;
+      pre = h.level;
+      if (dif > 0) {
+        for (i = 0; i < dif; i++) {
+          out += '<ul><li>';
+          closeTags.push('</li></ul>');
+        }
+      } else if (dif < 0) {
+        dif = -dif;
+        for (i = 0; i < dif; i++) {
+          out += closeTags.pop();
+        }
+        out += '</li><li>';
+      } else {
+        out += '</li><li>';
+      }
+      out += '<a href="#' +
+             h.id +
+             '">' +
+             h.title +
+             '</a>';
+    })
+    .value();
+
+  closeTags.forEach(function (tag) {
+    out += tag;
+  });
+
+  return out;
 }
 
 function setNoteProperties() {
@@ -59,12 +141,12 @@ function setNoteProperties() {
     this.category = 'uncategorized';
    }
   /* set link
-   * 
+   *
    */
    if (this.category === 'uncategorized') {
-     this.link = this._config.root + this.name + '/'; 
+     this.link = this._config.root + this.name + '/';
    } else {
-     this.link = this._config.root + this.category + '/' + this.name + '/'; 
+     this.link = this._config.root + this.category + '/' + this.name + '/';
    }
 }
 
@@ -72,7 +154,7 @@ function setNoteProperties() {
 function Note(file, config, globalTags) {
   log.debug('note init...');
   this.path = file;
-  this.filename = path.basename(file); 
+  this.filename = path.basename(file);
   this.name = path.basename(file, path.extname(file));
   this.tags = [];
   this._config = config;
@@ -108,7 +190,8 @@ Note.prototype.render = function (note_context) {
   setNoteProperties.call(this);
   // convert
   this.article = convertMD(content.md);
-  console.log(typeof this.article);
+  // TOC
+  this.toc = getToc(this.article, 3);
   context.title = this.title;
   context.note = this;
   swig.setDefaults({ autoescape: false });

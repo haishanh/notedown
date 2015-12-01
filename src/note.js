@@ -6,6 +6,7 @@ const path = require('path'),
       _ = require('lodash'),
       markdown = require('hs-marked-extra'),
       Tag = require('./tag'),
+      Category = require('./category'),
       helper = require('./helper'),
       fs = helper.fs,
       log = new helper.Logger(path.basename(__filename));
@@ -69,7 +70,6 @@ function getToc(x, n) {
 
   // parse text
   while (cap = reHeading.exec(x)) {
-    console.log(cap[2]);
     x = x.substring(cap.index + cap[0].length);
     headings.push({
       level: cap[1] - 0,
@@ -133,32 +133,50 @@ function setNoteProperties() {
    * if markdown file is <source_dir>/bash-shell.md
    *    then category is 'uncategorized'
    */
-   var filePath = this.path.slice(this._config.source_dir.length + 1);
-   var tokens = filePath.split(path.sep);
-   if (tokens.length > 1) {
-    this.category = tokens[0];
-   } else {
-    this.category = 'uncategorized';
-   }
+  var filePath = this.path.slice(this._config.source_dir.length + 1);
+  var tokens = filePath.split(path.sep);
+  var theCate;
+  var theCateName;
+  if (tokens.length > 1) {
+   theCateName = tokens[0];
+  } else {
+   theCateName = 'uncategorized';
+  }
+
+  if (theCateName in this._globalCategories) {
+    theCate = this._globalCategories[theCateName];
+  } else {
+    theCate = new Category(theCateName, this._config);
+    this._globalCategories[theCateName] = theCate;
+  }
+
+  theCate.notes.push(this);
+  theCate.count += 1;
+  this.category = theCate;
+
+  log.debug('== category name ==');
+  log.debug(this.category.name);
   /* set link
-   *
+   * uncategorized notes stay in root
    */
-   if (this.category === 'uncategorized') {
-     this.link = this._config.root + this.name + '/';
-   } else {
-     this.link = this._config.root + this.category + '/' + this.name + '/';
-   }
+  if (theCateName === 'uncategorized') {
+    this.link = this._config.root + this.name + '/';
+  } else {
+    this.link = this._config.root + theCateName + '/' + this.name + '/';
+  }
 }
 
 
-function Note(file, config, globalTags) {
+function Note(file, config, globalTags, globalCategories) {
   log.debug('note init...');
   this.path = file;
   this.filename = path.basename(file);
   this.name = path.basename(file, path.extname(file));
   this.tags = [];
+  this.category = null;
   this._config = config;
   this._globalTags = globalTags;
+  this._globalCategories = globalCategories;
 }
 
 Note.prototype.render = function (note_context) {
@@ -199,7 +217,7 @@ Note.prototype.render = function (note_context) {
                                          'templates',
                                          'note.html'),
                                context);
-  var sub = this.category === 'uncategorized' ? '' : this.category;
+  var sub = this.category.name === 'uncategorized' ? '' : this.category.name;
   fs.safeSave(path.join(this._config.output_dir,
                         sub),
               path.join(this.name,

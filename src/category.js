@@ -14,3 +14,5 @@ Category.prototype.render = function (){
   // render
   // save file
 }
+
+module.exports = Category;

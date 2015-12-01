@@ -20,9 +20,9 @@ function build() {
   var context = new Context().update(config, Theme);
   var files = glob.sync(config.source_dir + '/**/*.md');
 
-  
+
   files.forEach(function (file) {
-    var n = new Note(file, config, tags);
+    var n = new Note(file, config, tags, categories);
     n.render(context.note);
     notes.push(n);
   });
@@ -33,7 +33,6 @@ function build() {
     log.info('    Link:' + note.link);
   });
   var index = new Index(config);
-  log.info('==================');
   log.info('Rendering index page');
   index.render(context.index, notes, categories, tags);
 }
@@ -43,7 +42,7 @@ function serve() {
 }
 
 
-module.exports = { 
+module.exports = {
   build: build,
   serve: serve
 };

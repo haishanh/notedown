@@ -489,6 +489,10 @@ article a:hover {
   width: 262px;
   z-index: 100;
 }
+#toc .toc li.active {
+  border-right: 1px solid blue;
+  font-weight: bold;
+}
 #masthead {
   width: 100%;
   margin: 0 auto;

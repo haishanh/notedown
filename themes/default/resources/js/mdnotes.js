@@ -33,6 +33,15 @@ function stickToc() {
   }
   addAnchors();
   //$(window).scroll(stickToc);
+  
+  // scrollspy
+  gumshoe.init({
+    selector: '.toc li a',
+    selectorHeader: '.toc',
+    offset: 0,
+    activeClass: 'active',
+    callback: function (nav) {}
+  });
 })();
 
 

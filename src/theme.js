@@ -11,6 +11,8 @@ function Theme(config) {
     pathFn.join(config.output_dir, config.root, 'css', 'main.css');
   fmap[config.theme_dir + '/resources/js/jquery-1.11.3.min.js'] = 
     pathFn.join(config.output_dir, config.root, 'js', 'jquery-1.11.3.min.js');
+  fmap[config.theme_dir + '/resources/js/gumshoe.min.js'] =
+    pathFn.join(config.output_dir, config.root, 'js', 'gumshoe.min.js');
   fmap[config.theme_dir + '/resources/js/mdnotes.js'] =
     pathFn.join(config.output_dir, config.root, 'js', 'mdnotes.js');
   fmap[config.theme_dir + '/resources/img/notes.svg'] =

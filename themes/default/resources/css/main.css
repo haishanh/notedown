@@ -570,11 +570,13 @@ a.headerlink {
   padding: 0 4px;
 }
 pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
   border-radius: 5px;
 }
 code {
-  padding: 2px 4px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #eee;
 }
 .codehilite {
   padding: 5px 15px;
@@ -780,9 +782,12 @@ footer {
 .xml .hljs-cdata {
   opacity: 0.5;
 }
-/* */
-pre code[class|=lang] {
+/* common */
+pre code {
   display: block;
   color: #e7e9db;
   background-color: #2f1e2e;
+  padding: 10px 20px;
+  font-size: 14px;
+  line-height: 1.4;
 }

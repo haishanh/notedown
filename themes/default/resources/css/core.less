@@ -1,5 +1,5 @@
 @font-base: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
-@font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 @color-base: #66675f;
 @main-width: 1200px;
 @font-size: 16px;
@@ -241,12 +241,15 @@ a.headerlink {
 }
 
 pre {
-  font-family: @font-mono;
   border-radius: 5px;
 }
 
+// for inline code, generate from markdown string like `echo`
 code {
-  padding: 2px 4px;
+  font-family: @font-mono;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #eee;
 }
 
 .codehilite {

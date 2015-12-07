@@ -16,8 +16,8 @@
     <img src="{{ url_for('notes.svg') }}" class="logo" alt="mdnotes logo">
     <nav>
       <ul>
-      {% for key in menu.keys() %}
-      <li><a href="{{ menu[key] }}">{{ key }}</a></li>
+      {% for sub in menu %}
+      <li><a href="{{ sub }}">{{ loop.key }}</a></li>
       {% endfor %}
       </ul>
     </nav>

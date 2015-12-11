@@ -3,9 +3,37 @@
 const pathFn = require('path'),
       fs = require('fs-extra');
 
+
+const extToType = {
+  '.css'  : 'css',
+  '.js'   : 'js',
+  '.jpg'  : 'img',
+  '.jpeg' : 'img',
+  '.png'  : 'img',
+  '.svg'  : 'img',
+  '.gif'  : 'img',
+  '.webp' : 'img',
+  ''      : 'res'
+};
+
+/*
+ * Return the destination path of a file
+ * based on it's extension
+ */
+function genPath(root, fname) {
+  let bname = basename(fname);
+  let ext = pathFn.extname(bname).toLowerCase();
+  let outDir = extToType[ext] || 'res';
+
+  return pathFn.join(root, outDir, bname);
+}
+
 var lookup = {};
 
 function Theme(config) {
+  //if (!/\w\/\w/.test(theme_dir))
+  //  theme_dir = pathFn.join('themes', theme_dir);
+
   var fmap = {};
   fmap[config.theme_dir + '/resources/css/main.css'] = 
     pathFn.join(config.output_dir, config.root, 'css', 'main.css');

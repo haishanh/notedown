@@ -42,7 +42,7 @@ Index.prototype.render = function (index_context, notes, categories, tags) {
     } else {
       target_path = pathFn.join(this._config.root,
                                 page_dir,
-                                '' + page_id,
+                                '' + (page_id + 1),
                                 'index.html');
     }
     log.info('target_path: ' + target_path);

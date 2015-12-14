@@ -11,7 +11,7 @@ var helpStr = `
 var args = process.argv.slice(2);
 cmdStr = args.shift();
 if (cmdStr in command) {
-  command[cmdStr]();
+  command[cmdStr](args);
 } else {
   console.log('command "%s" not find.', cmdStr);
 }

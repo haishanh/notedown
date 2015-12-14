@@ -1,9 +1,11 @@
 'use strict';
 
 const pathFn = require('path'),
+      glob = require('glob'),
       fs = require('fs-extra');
 
 
+var lookup = {};
 const extToType = {
   '.css'  : 'css',
   '.js'   : 'js',
@@ -16,58 +18,59 @@ const extToType = {
   ''      : 'res'
 };
 
+
 /*
  * Return the destination path of a file
  * based on it's extension
  */
 function genPath(root, fname) {
-  let bname = basename(fname);
+  let bname = pathFn.basename(fname);
   let ext = pathFn.extname(bname).toLowerCase();
   let outDir = extToType[ext] || 'res';
 
   return pathFn.join(root, outDir, bname);
 }
 
-var lookup = {};
 
 function Theme(config) {
-  //if (!/\w\/\w/.test(theme_dir))
-  //  theme_dir = pathFn.join('themes', theme_dir);
-
-  var fmap = {};
-  fmap[config.theme_dir + '/resources/css/main.css'] = 
-    pathFn.join(config.output_dir, config.root, 'css', 'main.css');
-  fmap[config.theme_dir + '/resources/js/jquery-1.11.3.min.js'] = 
-    pathFn.join(config.output_dir, config.root, 'js', 'jquery-1.11.3.min.js');
-  fmap[config.theme_dir + '/resources/js/gumshoe.min.js'] =
-    pathFn.join(config.output_dir, config.root, 'js', 'gumshoe.min.js');
-  fmap[config.theme_dir + '/resources/js/mdnotes.js'] =
-    pathFn.join(config.output_dir, config.root, 'js', 'mdnotes.js');
-  fmap[config.theme_dir + '/resources/img/notes.svg'] =
-    pathFn.join(config.output_dir, config.root, 'img', 'notes.svg');
-  this.fmap = fmap;
   this._config = config;
-  this._lookup = {};
 }
+
 
 Theme.prototype.init = function () {
+
+  const cfg = this._config;
+  let dstRoot = pathFn.join(cfg.output_dir, cfg.root);
+  let len = cfg.output_dir.length;
+  let theme_dir = cfg.theme_dir;
+  if (!/\w\/\w/.test(theme_dir))
+    theme_dir = pathFn.join('themes', theme_dir);
+  let srcRoot = pathFn.join(theme_dir, 'assets');
+  let files = glob.sync(srcRoot + '/**/*', {
+                ignore: srcRoot + '/**/_*',
+                nodir: true
+              });
+
+  // ensure dirs
+  fs.ensureDirSync(pathFn.join(dstRoot, 'css'));
+  fs.ensureDirSync(pathFn.join(dstRoot, 'js'));
+  fs.ensureDirSync(pathFn.join(dstRoot, 'img'));
+  fs.ensureDirSync(pathFn.join(dstRoot, 'res'));
+
   // move
-  var extRe = /^([\S]*)(\.)(\w+)$/;
-  fs.ensureDirSync(pathFn.join(this._config.output_dir, this._config.root, 'css'));
-  fs.ensureDirSync(pathFn.join(this._config.output_dir, this._config.root, 'js'));
-  fs.ensureDirSync(pathFn.join(this._config.output_dir, this._config.root, 'img'));
-  for (var f in this.fmap) {
-    let name = pathFn.basename(f);
-    let out = extRe.exec(f);
-    let ext = out ? out[3]:'';
-    if (ext === 'svg') ext = 'img';
-    fs.copySync(f, this.fmap[f], { clobber: true });
-    lookup[name] = this._config.root + ext + '/' + name;
-  }
+  files.forEach(function (f) {
+    let bname = pathFn.basename(f);
+    lookup[bname] = genPath(dstRoot, f);
+    fs.copySync(f, lookup[bname], { clobber: true});
+    // overwrite lookup table
+    lookup[bname] = lookup[bname].substring(len);
+  });
 }
+
 
 Theme.url_for = function (file) {
   return lookup[file] || '';
 }
+
 
 module.exports = Theme;

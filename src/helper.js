@@ -37,7 +37,6 @@ Object.keys(levelToColor).forEach(function (level) {
 
 // same as 'mkdir -p dirname'
 function makeDirs(dirname) {
-  console.log('make dir %s', dirname);
   var dirnames = dirname.split(path.sep);
   var parentDir = '';
   dirnames.forEach(function (n) {
@@ -59,7 +58,6 @@ function makeDirs(dirname) {
 fs.safeSave = function (likeyExist, unlikeyExist, data) {
   var fullpath = path.join(likeyExist, unlikeyExist);
   var dirname = path.dirname(fullpath);
-  console.log('Saving to ' + fullpath);
   try {
     fs.statSync(likeyExist);
   } catch (e) {
@@ -68,7 +66,6 @@ fs.safeSave = function (likeyExist, unlikeyExist, data) {
   makeDirs(dirname);
   fs.writeFile(fullpath, data, 'utf-8', function (err) {
     if(err) throw err; 
-    console.log('Save to %s', fullpath);
   });
 }
 

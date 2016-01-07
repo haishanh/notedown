@@ -24,7 +24,7 @@ Now you will have a command named `note`. To quick start
 ```sh
 mkdir docs && cd docs
 cp /path/to/repo/notedown/config.yml .
-cp -r /path/to/repo/notedown/notes .
+cp -r /path/to/repo/notedown/demo_notes .
 ln -sf /path/to/repo/notedown/themes themes
 
 # then you are ready to go

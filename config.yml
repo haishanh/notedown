@@ -1,12 +1,12 @@
-title: Haishan's
-author: haishanh
+title: John Doe's
+author: John Doe
 
 # nav menu for your site
 menu:
   Home: /
-  About: http://hanhaishan.com/about/
+  About: https://github.com/haishanh/notedown
 
-source_dir: notes
+source_dir: demo_notes
 output_dir: output
 theme_dir: themes/default
 

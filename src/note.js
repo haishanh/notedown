@@ -46,6 +46,7 @@ function convertMD(str) {
     smartypants: false,
     admonition: true
   });
+
   return markdown(str);
 }
 
@@ -169,7 +170,6 @@ function setNoteProperties() {
 
 
 function Note(file, config, globalTags, globalCategories) {
-  log.debug('note init...');
   this.path = file;
   this.filename = path.basename(file);
   this.name = path.basename(file, path.extname(file));
@@ -181,7 +181,6 @@ function Note(file, config, globalTags, globalCategories) {
 }
 
 Note.prototype.render = function (note_context) {
-  log.info(`Rendering ${this.path}`);
   var content = splitFM(this.path);
   var fm = yaml.safeLoad(content.fm);
   var context = note_context || {};
@@ -207,10 +206,13 @@ Note.prototype.render = function (note_context) {
   }
   //
   setNoteProperties.call(this);
+
   // convert
   this.article = convertMD(content.md);
+
   // TOC
   this.toc = getToc(this.article, 3);
+
   context.title = this.title;
   context.note = this;
   swig.setDefaults({ autoescape: false });

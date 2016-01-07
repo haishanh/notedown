@@ -16,7 +16,6 @@ function merge(obj) {
 
   for (i = 1; i < arguments.length; i++) {
     other = arguments[i];
-    console.log(other);
     for (prop in other) {
       if (Object.prototype.hasOwnProperty.call(other, prop)) {
         obj[prop] = other[prop];

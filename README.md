@@ -3,6 +3,11 @@
 _Turn your markdown files into beautiful well structured htmls_
 
 
+[Demo][demo]
+
+Checkout these [beautiful admonitions][admonition]
+
+
 ## Usage
 
 ```sh
@@ -32,6 +37,10 @@ ln -sf /path/to/repo/notedown/themes themes
 note build
 note serve
 ```
+
+
+[demo]: http://hanhaishan.com/notedown/
+[admonition]: http://hanhaishan.com/notedown/test/admonition/
 
 ## License
 

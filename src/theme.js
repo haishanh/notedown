@@ -2,7 +2,9 @@
 
 const pathFn = require('path'),
       glob = require('glob'),
-      fs = require('fs-extra');
+      fs = require('fs-extra'),
+      helper = require('./helper'),
+      log = new helper.Logger(__filename);
 
 
 var lookup = {};

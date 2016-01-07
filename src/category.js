@@ -29,6 +29,7 @@ Category.prototype.render = function (context){
                                          'category.html'),
                                context);
   fs.safeSave(path.join(this._config.output_dir,
+                        this._config.root,
                         'categories'),
               path.join(this.name,
                         'index.html'),

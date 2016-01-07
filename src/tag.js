@@ -25,6 +25,7 @@ Tag.prototype.render = function (context) {
                                          'tag.html'),
                                context);
   fs.safeSave(path.join(this._config.output_dir,
+                        this._config.root,
                         'tags'),
               path.join(this.name,
                         'index.html'),

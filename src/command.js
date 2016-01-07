@@ -13,7 +13,7 @@ const fs = require('fs-extra'),
 
 
 function build() {
-  console.log('Building...');
+  log.info('Building...');
   var config = (new Config()).load();
   var notes = [];
   var tags = {};
@@ -33,9 +33,6 @@ function build() {
   });
   notes.forEach(function (note) {
     log.info(' * ' + note.title);
-    log.info('    Category:' + note.category);
-    log.info('    Tag:' + note.tags);
-    log.info('    Link:' + note.link);
   });
 
   // individual note page
@@ -57,12 +54,21 @@ function build() {
 }
 
 function serve() {
-  console.log('Serving...');
+  var express = require('express');
+  var app = express();
+
+  app.use('/', express.static('output'));
+
+  var server = app.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('Serving at http://%s:%s', host, port);
+  });
 }
 
 
 module.exports = {
   build,
-  init,
   serve
 };

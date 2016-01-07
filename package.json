@@ -14,13 +14,14 @@
     "doc"
   ],
   "author": "HAN Haishan",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.1",
+    "express": "^4.13.3",
     "fs-extra": "^0.26.2",
     "glob": "^6.0.1",
-    "highlight.js": "^8.9.1",
-    "hs-marked-extra": "^1.0.0",
+    "highlight.js": "^9.1.0",
+    "hs-marked-extra": "^1.0.2",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
     "swig": "^1.4.2"

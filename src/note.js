@@ -221,7 +221,6 @@ Note.prototype.render = function (note_context) {
                                          'note.html'),
                                context);
   var sub = this.category.name === 'uncategorized' ? '' : this.category.name;
-  log.debug(this._config.output_dir);
   fs.safeSave(path.join(this._config.output_dir,
                         this._config.root,
                         sub),

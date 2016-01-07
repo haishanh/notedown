@@ -10,7 +10,7 @@ git clone https://github.com/haishanh/notedown.git
 cd notedown
 npm install . -g
 
-# if you don't down to install globally you can
+# if you don't want to install globally you can
 cd notedown
 # install dependencies
 npm install

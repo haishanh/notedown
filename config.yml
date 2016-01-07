@@ -1,6 +1,7 @@
 title: Haishan's
 author: haishanh
 
+# nav menu for your site
 menu:
   Home: /
   About: http://hanhaishan.com/about/
@@ -15,7 +16,3 @@ theme_dir: themes/default
 # then root should be set to '/notes/' instead of '/'
 root: /
 per_page: 5
-
-# code highlight style
-# avaliable styles:
-# highlight_style: paraiso-dark 

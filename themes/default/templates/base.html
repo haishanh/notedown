@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="description" content="TODO">
-    <meta name="author" content="TODO">
+    <meta name="description" content="{{ config.description }}">
+    <meta name="author" content="{{ config.author }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('main.css') }}">
     {% block title %}
     <title>title</title>
@@ -11,17 +11,17 @@
   </head>
   <body>
     <header id="masthead">
-    <div class="inner">
-    <h2>{{ header_title }}</h2>
-    <img src="{{ url_for('notes.svg') }}" class="logo" alt="mdnotes logo">
-    <nav>
-      <ul>
-      {% for sub in menu %}
-      <li><a href="{{ sub }}">{{ loop.key }}</a></li>
-      {% endfor %}
-      </ul>
-    </nav>
-    </div>
+      <div class="inner">
+        <h2>{{ header_title }}</h2>
+        <a href="{{ config.root }}"><img src="{{ url_for('notes.svg') }}" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          {% for sub in menu %}
+          <li><a href="{{ sub }}">{{ loop.key }}</a></li>
+          {% endfor %}
+          </ul>
+        </nav>
+      </div>
     </header>
     <div id="mainwrapper">
       <main>
@@ -36,7 +36,7 @@
     </div>
     {% block beforefooter %}
     {% endblock %}
-    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 {{ author }}</footer>
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 {{ config.author }}</footer>
     {% block afterfooter %}
     <script type="text/javascript" src="{{ url_for('jquery-1.11.3.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('gumshoe.min.js') }}"></script>

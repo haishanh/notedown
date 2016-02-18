@@ -36,6 +36,15 @@ ln -sf /path/to/repo/notedown/themes themes
 
 note build
 note serve
+
+# to deploy to github
+
+# you can use the helper script deploy.sh
+cp /path/to/repo/notedown/deploy.sh .
+
+# edit some of the global variables at beginning of the script as you wish
+# then
+./deploy.sh
 ```
 
 

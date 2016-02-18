@@ -31,8 +31,7 @@ function merge(obj) {
  */
 Context.prototype.update = function (config, Theme) {
   this.common['url_for'] = Theme.url_for;
-  this.common['author'] = config.author;
-  this.common['title'] = config.title;
+  this.common['config'] = config;
   this.common.menu = merge({}, config.menu);
   this.common['header_title'] = config.title;
   for (var key in this.common) {

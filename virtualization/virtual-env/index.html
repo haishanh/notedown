@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="HAN Haishan">
+    <link rel="stylesheet" type="text/css" href="/notedown/css/main.css">
+    
+<title>Haishan's</title>
+
+  </head>
+  <body>
+    <header id="masthead">
+      <div class="inner">
+        <h2>Haishan's</h2>
+        <a href="/notedown/"><img src="/notedown/img/notes.svg" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="https://github.com/haishanh/notedown">About</a></li>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  <div class="toc"><ul><li><a href="#qemu-examples">QEMU examples</a></li><li><a href="#linux-bridge-basic-command">Linux bridge basic command</a></li><li><a href="#ovs-basic-command">OVS basic command</a></div></li></ul>
+</div>
+
+</section>
+
+        
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>QEMU related</h2>
+    <div class="tag-bar">
+    
+    <a href="/notedown/tags/virtualization/">virtualization </a>
+    
+    </div>
+  </header>
+  <h2 id="qemu-examples">QEMU examples</h2>
+<p>Start a VM with 3 nics, 3G memory, 4 cores.</p>
+<pre><code class="lang-sh">qemu-system-x86_64 -enable-kvm \
+                   -<span class="ruby">nographic \
+</span>                   -<span class="ruby">m <span class="hljs-number">3</span>G \
+</span>                   -<span class="ruby">cpu host \
+</span>                   -<span class="ruby">smp <span class="hljs-number">4</span> \
+</span>                   -<span class="ruby">hda /home/haishanh/images/ubuntu-<span class="hljs-number">1504</span>.qcow2 \
+</span>                   -<span class="ruby">netdev tap,id=hostnet<span class="hljs-number">0</span>,script=no,downscript=no,vhost=on \
+</span>                   -<span class="ruby">device virtio-net-pci,netdev=hostnet<span class="hljs-number">0</span>,mac=<span class="hljs-number">52</span><span class="hljs-symbol">:</span><span class="hljs-number">54</span><span class="hljs-symbol">:f6</span><span class="hljs-symbol">:f4</span><span class="hljs-symbol">:c0</span><span class="hljs-symbol">:a1</span> \
+</span>                   -<span class="ruby">netdev tap,id=hostnet1,script=no,downscript=no,vhost=on \
+</span>                   -<span class="ruby">device virtio-net-pci,netdev=hostnet1,mac=<span class="hljs-number">52</span><span class="hljs-symbol">:</span><span class="hljs-number">54</span><span class="hljs-symbol">:</span><span class="hljs-number">2</span><span class="hljs-symbol">d:</span><span class="hljs-number">32</span><span class="hljs-symbol">:</span><span class="hljs-number">2</span><span class="hljs-symbol">b:</span>d<span class="hljs-number">0</span> \
+</span>                   -<span class="ruby">netdev tap,id=hostnet2,script=no,downscript=no,vhost=on \
+</span>                   -<span class="ruby">device virtio-net-pci,netdev=hostnet2,mac=<span class="hljs-number">52</span><span class="hljs-symbol">:</span><span class="hljs-number">54</span><span class="hljs-symbol">:</span><span class="hljs-number">75</span><span class="hljs-symbol">:</span><span class="hljs-number">5</span><span class="hljs-symbol">d:</span><span class="hljs-symbol">b1:</span>bd \
+</span>                   -<span class="ruby">vnc <span class="hljs-symbol">:</span><span class="hljs-number">40</span> &amp;</span>
+</code></pre>
+<h2 id="linux-bridge-basic-command">Linux bridge basic command</h2>
+<pre><code class="lang-sh"><span class="hljs-keyword">brctl </span><span class="hljs-keyword">addbr </span><span class="hljs-keyword">br0
+</span><span class="hljs-keyword">brctl </span><span class="hljs-keyword">addif </span><span class="hljs-keyword">br0 </span>tap0
+</code></pre>
+<h2 id="ovs-basic-command">OVS basic command</h2>
+<p>Config</p>
+<pre><code class="lang-sh">ovs_prefix=''
+ovs_db=<span class="hljs-variable">${ovs_prefix}</span>/etc/openvswitch/<span class="hljs-keyword">conf</span>.<span class="hljs-keyword">db</span>
+ovs_db_sock=<span class="hljs-variable">${ovs_prefix}</span>/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">run</span>/openvswitch/<span class="hljs-keyword">db</span>.sock
+ovs_db_schema=/usr/share/openvswitch/vswitch.ovsschema
+
+<span class="hljs-keyword">mkdir</span> -p <span class="hljs-variable">${ovs_prefix}</span>/etc/openvswitch
+<span class="hljs-keyword">mkdir</span> -p <span class="hljs-variable">${ovs_prefix}</span>/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">run</span>/openvswitch
+# create ovs_db
+ovsdb-tool create <span class="hljs-variable">${ovs_db}</span> <span class="hljs-variable">${ovs_db_schema}</span>
+# start server
+ovsdb-server --remote=punix:<span class="hljs-variable">${ovs_db_sock}</span> \
+             --remote=<span class="hljs-keyword">db</span>:Open_vSwitch,Open_vSwitch,manager_options \
+             --pidfile --detach <span class="hljs-variable">${ovs_db}</span>
+
+ovs_version=$(ovs-vsctl -V | grep ovs-vsctl | awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$4}</span>')
+ovs_db_version=$(ovsdb-tool schema-<span class="hljs-keyword">version</span> <span class="hljs-variable">${obs_db_schema}</span>)
+
+
+ovs-vsctl --<span class="hljs-keyword">no</span>-wait -- init  -- <span class="hljs-keyword">set</span> Open_vSwitch . <span class="hljs-keyword">db</span>-<span class="hljs-keyword">version</span>=<span class="hljs-variable">${ovs_db_version}</span>
+ovs-vsctl --<span class="hljs-keyword">no</span>-wait -- <span class="hljs-keyword">set</span> Open_vSwitch . ovs-<span class="hljs-keyword">version</span>=<span class="hljs-variable">${ovs_version}</span>
+
+# start ovs-vswitchd deamon
+ovs-vswitchd --pidfile --detach
+</code></pre>
+<p>Add a vSwitch and add a port in it</p>
+<pre><code class="lang-sh">ovs-vsctl<span class="hljs-built_in"> add-br </span>br0
+ovs-vsctl<span class="hljs-built_in"> add-port </span>br0 tap0
+</code></pre>
+
+</article>
+</section>
+
+      </main>
+    </div>
+    
+    
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 HAN Haishan</footer>
+    
+    <script type="text/javascript" src="/notedown/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/gumshoe.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/mdnotes.js"></script>
+    
+  </body>
+</html>

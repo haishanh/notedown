@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="HAN Haishan">
+    <link rel="stylesheet" type="text/css" href="/notedown/css/main.css">
+    
+<title>Haishan's</title>
+
+  </head>
+  <body>
+    <header id="masthead">
+      <div class="inner">
+        <h2>Haishan's</h2>
+        <a href="/notedown/"><img src="/notedown/img/notes.svg" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="https://github.com/haishanh/notedown">About</a></li>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  <div class="toc"><ul><li><a href="#ps-command">ps command</a></div></li></ul>
+</div>
+
+</section>
+
+        
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>Linux Utilities</h2>
+    <div class="tag-bar">
+    
+    <a href="/notedown/tags/linux/">linux </a>
+    
+    <a href="/notedown/tags/utility/">utility </a>
+    
+    </div>
+  </header>
+  <h2 id="ps-command">ps command</h2>
+<pre><code>ps <span class="hljs-_">-e</span>Lo ppid,pid,lwp,psr,pcpu,<span class="hljs-built_in">command</span> | egrep <span class="hljs-string">'qemu|PID'</span>
+</code></pre><p>The string following option <code>-o</code> is the <strong>STANDARD FORMAT SPECIFIERS</strong>. Where:</p>
+<ul>
+<li><code>lwp</code> means &#39;light weight process (thread) ID of the dispatchable entity&#39;. </li>
+<li><code>psr</code> means &#39;processor that process is currently assigned to&#39;.</li>
+<li><code>pcpu</code> for cpu usage.</li>
+<li><code>command</code> alias <code>args</code>, <code>cmd</code></li>
+</ul>
+<p>Note, if <code>lwp</code> is specified, <code>-L</code> option is needed.</p>
+<blockquote>
+<p>-L     Show threads, possibly with LWP and NLWP columns.</p>
+</blockquote>
+<p>More specifiers see <code>man ps</code></p>
+<pre><code>ps --cols 150 <span class="hljs-_">-e</span>Lo ppid,pid,lwp,psr,pmem,cmd | egrep <span class="hljs-string">'qemu|PID'</span>
+</code></pre><p><code>--cols</code> can be specified for better readability.</p>
+
+</article>
+</section>
+
+      </main>
+    </div>
+    
+    
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 HAN Haishan</footer>
+    
+    <script type="text/javascript" src="/notedown/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/gumshoe.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/mdnotes.js"></script>
+    
+  </body>
+</html>

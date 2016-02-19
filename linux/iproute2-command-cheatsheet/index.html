@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="HAN Haishan">
+    <link rel="stylesheet" type="text/css" href="/notedown/css/main.css">
+    
+<title>Haishan's</title>
+
+  </head>
+  <body>
+    <header id="masthead">
+      <div class="inner">
+        <h2>Haishan's</h2>
+        <a href="/notedown/"><img src="/notedown/img/notes.svg" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="https://github.com/haishanh/notedown">About</a></li>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  <div class="toc"><ul><li><a href="#shorthand">shorthand</a></li><li><a href="#address">Address</a></li><li><a href="#link">Link</a></li><li><a href="#route">Route</a></li><li><a href="#namespace">Namespace</a></li><li><a href="#veth">veth</a></div></li></ul>
+</div>
+
+</section>
+
+        
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>iproute2 Command Cheatsheet</h2>
+    <div class="tag-bar">
+    
+    </div>
+  </header>
+  <h2 id="shorthand">shorthand</h2>
+<pre><code><span class="hljs-built_in">ip</span> route -&gt; <span class="hljs-built_in">ip</span> r
+<span class="hljs-built_in">ip</span> addr <span class="hljs-keyword">add</span> -&gt; <span class="hljs-built_in">ip</span> a a
+...
+</code></pre><h2 id="address">Address</h2>
+<pre><code><span class="hljs-symbol">ip</span> <span class="hljs-keyword">addr </span><span class="hljs-keyword">add </span><span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">3</span>.<span class="hljs-number">4</span>/<span class="hljs-number">24</span> dev eth2
+<span class="hljs-symbol">ip</span> <span class="hljs-keyword">addr </span>flush dev eth2
+</code></pre><h2 id="link">Link</h2>
+<pre><code>ip <span class="hljs-keyword">link</span> <span class="hljs-built_in">set</span> up dev eth2
+ip <span class="hljs-keyword">link</span> <span class="hljs-built_in">set</span> up eth2
+ip <span class="hljs-keyword">link</span> <span class="hljs-built_in">set</span> eth2 up
+</code></pre><h2 id="route">Route</h2>
+<pre><code><span class="hljs-built_in">ip</span> route <span class="hljs-keyword">add</span> <span class="hljs-number">1.2</span><span class="hljs-string">.3</span><span class="hljs-string">.0</span>/<span class="hljs-number">24</span> dev eth2
+<span class="hljs-built_in">ip</span> route <span class="hljs-keyword">add</span> <span class="hljs-meta">default</span> via <span class="hljs-number">1.2</span><span class="hljs-string">.3</span><span class="hljs-string">.1</span>
+</code></pre><h2 id="namespace">Namespace</h2>
+<pre><code><span class="hljs-built_in">ip</span> netns <span class="hljs-keyword">add</span> ns1
+<span class="hljs-built_in">ip</span> link set eth2 netns ns1
+<span class="hljs-built_in">ip</span> netns exec ns1 <span class="hljs-built_in">ip</span> link set eth2 <span class="hljs-meta">up</span>
+<span class="hljs-built_in">ip</span> netns exec <span class="hljs-built_in">ip</span> addr <span class="hljs-keyword">add</span> <span class="hljs-number">2.2</span><span class="hljs-string">.2</span><span class="hljs-string">.2</span>/<span class="hljs-number">24</span> dev eth2
+<span class="hljs-built_in">ip</span> netns exec ping <span class="hljs-number">2.2</span><span class="hljs-string">.2</span><span class="hljs-string">.1</span>
+</code></pre><h2 id="veth">veth</h2>
+<pre><code><span class="hljs-built_in">ip</span> link <span class="hljs-keyword">add</span> name veth1 type veth peer name veth2
+<span class="hljs-built_in">ip</span> netns <span class="hljs-keyword">add</span> ns1
+<span class="hljs-built_in">ip</span> netns <span class="hljs-keyword">add</span> ns2
+<span class="hljs-built_in">ip</span> link set veth1 netns ns1
+<span class="hljs-built_in">ip</span> link set veth2 netns ns2
+</code></pre>
+</article>
+</section>
+
+      </main>
+    </div>
+    
+    
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 HAN Haishan</footer>
+    
+    <script type="text/javascript" src="/notedown/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/gumshoe.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/mdnotes.js"></script>
+    
+  </body>
+</html>

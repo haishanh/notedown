@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="HAN Haishan">
+    <link rel="stylesheet" type="text/css" href="/notedown/css/main.css">
+    
+<title>Haishan's</title>
+
+  </head>
+  <body>
+    <header id="masthead">
+      <div class="inner">
+        <h2>Haishan's</h2>
+        <a href="/notedown/"><img src="/notedown/img/notes.svg" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="https://github.com/haishanh/notedown">About</a></li>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  <div class="toc"><ul><li><a href="#getopts">getopts</a></li><li><a href="#transverse-space-seperated-file">Transverse space seperated file</a></li><li><a href="#grouping-commands">Grouping commands</a></li><li><a href="#trapping-signals">Trapping signals</a></div></li></ul>
+</div>
+
+</section>
+
+        
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>Bash shell scripting patterns</h2>
+    <div class="tag-bar">
+    
+    <a href="/notedown/tags/bash/">bash </a>
+    
+    </div>
+  </header>
+  <p>This note contains some Bash shell scripting patterns which I&#39;m prefer. -haishanh</p>
+<h2 id="getopts">getopts</h2>
+<pre><code class="lang-bash"><span class="hljs-meta">#!/bin/bash
+</span>
+prog=`basename <span class="hljs-variable">${0}</span>`
+
+<span class="hljs-function"><span class="hljs-title">usage_exit</span></span>()
+{
+  <span class="hljs-keyword">if</span> [ ! -z <span class="hljs-string">"<span class="hljs-variable">${1}</span>"</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-variable">${1}</span>; <span class="hljs-built_in">echo</span>; <span class="hljs-keyword">fi</span>
+  cat &lt;&lt;EOF
+<span class="hljs-variable">${prog}</span> [-m SIZE] [-h]
+
+<span class="hljs-variable">${prog}</span> by haishanh
+
+    -m SIZE
+        Specify xx size
+    -h
+        Show this <span class="hljs-built_in">help</span> message
+EOF
+  <span class="hljs-keyword">if</span> [ ! -z <span class="hljs-string">"<span class="hljs-variable">${1}</span>"</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">exit</span> 1; <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-keyword">while</span> <span class="hljs-built_in">getopts</span> :hm: arg; <span class="hljs-keyword">do</span>
+ <span class="hljs-keyword">case</span> <span class="hljs-variable">${arg}</span> <span class="hljs-keyword">in</span>
+  h) 
+    usage_<span class="hljs-built_in">exit</span>
+    ;;
+  m)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"-m enabeld"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${OPTARG}</span>"</span>
+    ;;
+  \?)
+    usage_<span class="hljs-built_in">exit</span> <span class="hljs-string">"Oops, unkown arg..."</span>
+    ;;
+ <span class="hljs-keyword">esac</span>
+<span class="hljs-keyword">done</span>
+</code></pre>
+<h2 id="transverse-space-seperated-file">Transverse space seperated file</h2>
+<pre><code><span class="hljs-keyword">while</span> read _ mnt fstype options; <span class="hljs-keyword">do</span>
+  echo $fstype $options
+done &lt; /<span class="hljs-function"><span class="hljs-keyword">proc</span>/<span class="hljs-title">mounts</span></span>
+</code></pre><h2 id="grouping-commands">Grouping commands</h2>
+<pre><code>[ <span class="hljs-string">"<span class="hljs-variable">$IPADDR</span>"</span> ] || [ <span class="hljs-string">"<span class="hljs-variable">$HOSTNAME</span>"</span> ] || {
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"ip addr"</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"or hostname is needed"</span>
+  <span class="hljs-built_in">exit</span> 1
+}
+</code></pre><h2 id="trapping-signals">Trapping signals</h2>
+<pre><code class="lang-sh"><span class="hljs-meta">#!/bin/bash
+</span>
+<span class="hljs-function"><span class="hljs-title">do_cleanup</span></span>()
+{
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Clean up"</span>
+  <span class="hljs-built_in">exit</span> 1
+}
+
+<span class="hljs-built_in">trap</span> <span class="hljs-string">"do_cleanup"</span> INT EXIT
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..100}; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">${i}</span>%"</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-_">-ne</span> <span class="hljs-string">"\r"</span>
+  sleep 0.5
+<span class="hljs-keyword">done</span>
+</code></pre>
+
+</article>
+</section>
+
+      </main>
+    </div>
+    
+    
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 HAN Haishan</footer>
+    
+    <script type="text/javascript" src="/notedown/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/gumshoe.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/mdnotes.js"></script>
+    
+  </body>
+</html>

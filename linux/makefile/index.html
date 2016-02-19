@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="HAN Haishan">
+    <link rel="stylesheet" type="text/css" href="/notedown/css/main.css">
+    
+<title>Haishan's</title>
+
+  </head>
+  <body>
+    <header id="masthead">
+      <div class="inner">
+        <h2>Haishan's</h2>
+        <a href="/notedown/"><img src="/notedown/img/notes.svg" class="logo" alt="mdnotes logo"></a>
+        <nav>
+          <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="https://github.com/haishanh/notedown">About</a></li>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="mainwrapper">
+      <main>
+        
+<section id="left" class="note">
+<div id="toc">
+  <div class="title">In this page</div>
+  <div class="toc"><ul><li><a href="#condition">Condition</a></div></li></ul>
+</div>
+
+</section>
+
+        
+<section id="middle" class="note">
+<article>
+  <header id="article-header">
+    <h2>Makefile snippet</h2>
+    <div class="tag-bar">
+    
+    <a href="/notedown/tags/linux/">linux </a>
+    
+    <a href="/notedown/tags/makefile/">makefile </a>
+    
+    </div>
+  </header>
+  <p>Example</p>
+<pre><code><span class="hljs-keyword">CC</span> = <span class="hljs-keyword">g</span>++ 
+FLAGS = -Wall -lpthread
+LIB_STDCPP = -lstdc++
+
+all: <span class="hljs-keyword">test</span>
+
+<span class="hljs-keyword">test</span>.o: <span class="hljs-keyword">test</span>.c
+    $(<span class="hljs-keyword">CC</span>) -c -o $@ $^
+
+<span class="hljs-keyword">test</span>: <span class="hljs-keyword">test</span>.o
+    $(<span class="hljs-keyword">CC</span>) -o $@ $^ $(FLAGS) $(LIB_STDCPP)
+
+.PHONY: clean
+
+clean:
+    /bin/<span class="hljs-keyword">rm</span> -rf <span class="hljs-keyword">test</span>
+    /bin/<span class="hljs-keyword">rm</span> -rf <span class="hljs-keyword">test</span>.o
+</code></pre><p>Makefile:</p>
+<ul>
+<li><code>$@</code>: The file name of the target of the rule</li>
+<li><code>$^</code>: The names of all the prerequisites, iwth spaces between them.</li>
+</ul>
+<p>More: see <a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html">here</a></p>
+<p>gcc/g++:</p>
+<ul>
+<li><code>-c</code>: Compile or assemble the source files, but do not link.  The linking stage simply is not done.  The ultimate output is in the form of an object file for each source file.</li>
+</ul>
+<h2 id="condition">Condition</h2>
+<pre><code>ifeq ($(<span class="hljs-built_in">shell</span> uname),Darwin)
+LD := gcc-apple<span class="hljs-number">-4.2</span>
+CC := gcc-apple<span class="hljs-number">-4.2</span>
+<span class="hljs-keyword">else</span>
+LD := gcc
+CC := gcc
+<span class="hljs-keyword">endif</span>
+</code></pre>
+</article>
+</section>
+
+      </main>
+    </div>
+    
+    
+    <footer>Powered by <a href="https://github.com/haishanh/notedown">notedown</a><br/>&copy; Copyright 2015 HAN Haishan</footer>
+    
+    <script type="text/javascript" src="/notedown/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/gumshoe.min.js"></script>
+    <script type="text/javascript" src="/notedown/js/mdnotes.js"></script>
+    
+  </body>
+</html>
